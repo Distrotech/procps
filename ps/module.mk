@@ -20,7 +20,7 @@ PS_X := COPYING HACKING TRANSLATION common.h module.mk it p ps.1 regression
 TARFILES += $(PSSRC) $(addprefix ps/,$(PS_X))
 
 ps/ps: $(PSOBJ) $(LIBPROC)
-	$(CC) $(ALL_CFLAGS) $(ALL_LDFLAGS) -o $@ $^ $(ldl)
+	$(CC) $(ALL_CFLAGS) $(ALL_LDFLAGS) -L./proc -lproc-3.2.8 -o $@ $^ $(ldl)
 
 # This just adds the stacktrace code
 ps/debug: $(PSOBJ) stacktrace.o $(LIBPROC)
