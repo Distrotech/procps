@@ -67,7 +67,7 @@ TARFILES := AUTHORS BUGS NEWS README TODO COPYING COPYING.LIB \
 # plus the top-level Makefile to make it work stand-alone.
 _TARFILES := Makefile
 
-CURSES := -lncursesw
+CURSES := -lncursesw -ltinfow -ldl
 
 # This seems about right for the dynamic library stuff.
 # Something like this is probably needed to make the SE Linux
@@ -82,7 +82,7 @@ CURSES := -lncursesw
 
 # Preprocessor flags.
 PKG_CPPFLAGS := -D_GNU_SOURCE -I proc
-CPPFLAGS     := -I/usr/include/ncurses
+CPPFLAGS     :=
 ALL_CPPFLAGS := $(PKG_CPPFLAGS) $(CPPFLAGS)
 
 # Left out -Wconversion due to noise in glibc headers.
