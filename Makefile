@@ -67,7 +67,7 @@ TARFILES := AUTHORS BUGS NEWS README TODO COPYING COPYING.LIB \
 # plus the top-level Makefile to make it work stand-alone.
 _TARFILES := Makefile
 
-CURSES := -lncursesw -ltinfow -ldl
+CURSES := -lncursesw -ldl
 
 # This seems about right for the dynamic library stuff.
 # Something like this is probably needed to make the SE Linux
