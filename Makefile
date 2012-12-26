@@ -29,9 +29,6 @@ ln_f     := ln -f
 ln_sf    := ln -sf
 install  := install -D --owner 0 --group 0
 
-# Lame x86-64 /lib64 and /usr/lib64 abomination:
-lib64    := lib$(shell [ -d /lib64 ] && echo 64)
-
 usr/bin                  := $(DESTDIR)/usr/bin/
 bin                      := $(DESTDIR)/bin/
 sbin                     := $(DESTDIR)/sbin/
@@ -39,8 +36,8 @@ usr/proc/bin             := $(DESTDIR)/usr/bin/
 man1                     := $(DESTDIR)/usr/share/man/man1/
 man5                     := $(DESTDIR)/usr/share/man/man5/
 man8                     := $(DESTDIR)/usr/share/man/man8/
-lib                      := $(DESTDIR)/$(lib64)/
-usr/lib                  := $(DESTDIR)/usr/$(lib64)/
+lib                      := $(DESTDIR)/lib/
+usr/lib                  := $(DESTDIR)/usr/lib/
 usr/include              := $(DESTDIR)/usr/include/
 
 #SKIP     := $(bin)kill $(man1)kill.1
@@ -120,15 +117,6 @@ ifneq ($(MAKECMDGOALS),beta)
 # producing an executable. There might be a -m64 that works
 # until you go looking for a 64-bit curses library.
 check_gcc = $(shell if $(CC) $(ALL_CPPFLAGS) $(ALL_CFLAGS) dummy.c $(ALL_LDFLAGS) $(1) -o /dev/null $(CURSES) > /dev/null 2>&1; then echo "$(1)"; else echo "$(2)"; fi ;)
-
-# Be 64-bit if at all possible. In a cross-compiling situation, one may
-# do "make m64=-m32 lib64=lib" to produce 32-bit executables. DO NOT
-# attempt to use a 32-bit executable on a 64-bit kernel. Packagers MUST
-# produce separate executables for ppc and ppc64, s390 and s390x,
-# i386 and x86-64, mips and mips64, sparc and sparc64, and so on.
-# Failure to do so will cause data corruption.
-m64 := $(call check_gcc,-m64,$(call check_gcc,-mabi=64,))
-ALL_CFLAGS += $(m64)
 
 ALL_CFLAGS += $(call check_gcc,-Wdeclaration-after-statement,)
 ALL_CFLAGS += $(call check_gcc,-Wpadded,)
@@ -217,7 +205,7 @@ beta: $(TARFILES) $(_TARFILES)
 	gzip -9 beta-$(TARVERSION).tar
 
 clean:
-	rm -f $(CLEAN)
+	rm -f $(CLEAN) ps/*.o
 
 ###### install
 
