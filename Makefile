@@ -40,7 +40,7 @@ lib                      := $(DESTDIR)/lib/
 usr/lib                  := $(DESTDIR)/usr/lib/
 usr/include              := $(DESTDIR)/usr/include/
 
-#SKIP     := $(bin)kill $(man1)kill.1
+SKIP     := $(bin)kill $(man1)kill.1
 
 BINFILES := $(usr/bin)uptime $(usr/bin)tload $(usr/bin)free $(usr/bin)w \
             $(usr/bin)top $(usr/bin)vmstat $(usr/bin)watch $(usr/bin)skill \
